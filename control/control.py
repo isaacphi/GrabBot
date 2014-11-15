@@ -10,9 +10,16 @@ device2 = "/dev/ttyAMC1"
 # Physical dimensions in mm
 L = 500
 W = 400
+H = 320
 R = 20
 MAX_RPM = 50
 MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
+MIN_X = -500
+MAX_X = 500
+MIN_Y = -500
+MAY_Y = 500
+MIN_Z = 50
+MAX_Z = 500
 
 x, y, z, theta = 0, 0, 0, 0
 
@@ -37,6 +44,13 @@ def move(p1, p2, phi, del_t):
     if theta < 0: theta = 0
     x1, y1, z1 = p1 # last points
     x2, y2, z2 = p2 # new points
+    # Convert from Neil's coordinate system to the physical one
+    x1 = L * (x1 + MIN_X) / (MAX_X-MIN_X)
+    x2 = L * (x2 + MIN_X) / (MAX_X-MIN_X)
+    y1 = W * (y1 + MIN_Y) / (MAX_Y-MIN_Y)
+    y2 = W * (y2 + MIN_Y) / (MAX_Y-MIN_Y)
+    z1 = -H * (z1 + MIN_Z) / (MAX_X-MIN_Z)
+    z2 = -H * (z2 + MIN_Z) / (MAX_X-MIN_Z)
     # Calculate last string lengths
     l_SW1 = math.sqrt( x1**2 + y1**2 + z1**2 )
     l_SE1 = math.sqrt( (L-x1)**2 + y1**2 + z1**2 )
@@ -72,7 +86,7 @@ def move(p1, p2, phi, del_t):
     if NE_speed < 0: NE_speed = 0
     # TODO make angle right
     # Update the motor speeds & Angle
-    ser.write(NE_speed, NW_speed, SE_speed, SW_speed, theta)
+    ser.write(NE_speed + NW_speed + SE_speed + SW_speed + theta + '\n')
 
 if __name__ == '__main__':
     main()
