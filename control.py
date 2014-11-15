@@ -36,8 +36,10 @@ def setup():
         try:
             ser = serial.Serial(path, PORT)
             print "connected to", path
-            break
+            return ser
         except serial.SerialException as e:
+            pass
+        except OSError as e:
             pass
     else:
         raise e
