@@ -4,8 +4,6 @@ import serial
 import math
 
 PORT = 9600
-device = "/dev/ttyACM0"
-device2 = "/dev/ttyAMC1"
 
 # Physical dimensions in mm
 L = 500
@@ -23,20 +21,27 @@ MAX_Z = 500
 
 x, y, z, theta = 0, 0, 0, 0
 
-def main():
-    # Connect to arduino
-    try:
-        ser = serial.Serial(device, PORT)
-        print 'Connected to ', device
-    except serial.SerialException:
-        ser = serial.Serial(device2, PORT)
-        print 'Connected to ', device2
-        time.sleep(1)
 
-    # Main loop
+def main():
+    setup()
     while True:
         speeds = input('speeds: ')
         ser.write(str(speeds))
+
+
+def setup():
+    """ Connect to arduino """
+
+    for path in ("/dev/ttyACM0", "/dev/ttyACM1", "/dev/tty.usbmodem1411", "/dev/cu.usbmodem1411"):
+        try:
+            ser = serial.Serial(path, PORT)
+            print "connected to", path
+            break
+        except serial.SerialException as e:
+            pass
+    else:
+        raise e
+
 
 def move(p1, p2, phi, del_t):
     theta = 90 - phi
@@ -87,6 +92,7 @@ def move(p1, p2, phi, del_t):
     # TODO make angle right
     # Update the motor speeds & Angle
     ser.write(NE_speed + NW_speed + SE_speed + SW_speed + theta + '\n')
+
 
 if __name__ == '__main__':
     main()

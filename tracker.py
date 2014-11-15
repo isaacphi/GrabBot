@@ -4,11 +4,29 @@ import Leap
 import sys
 import time
 import math
+import threading
+
+import control
 
 
 GRIP_MIN_DIST = 40
 GRIP_MAX_DIST = 90
 GRIP_ANGLE_MAX = 30
+DELAY = 0.05
+
+done = False
+index = 0
+samples = [(0, 0, 0, 0) * 10]
+previous = (0, 0, 0)
+
+
+def sample():
+    while not done:
+        average = [sum([x[i] for x in samples]) for i in range(4)]
+        print average
+        control.move(previous, average[:3], average[3], DELAY)
+        previous = average[:3]
+        time.sleep(DELAY)
 
 
 def dist(v1, v2):
@@ -46,6 +64,7 @@ class GripBotListener(Leap.Listener):
 
         x = int(finger[0])
         y = -int(finger[2])
+        z = int(finger[1])
         distance = dist(finger, thumb)
 
         if distance < GRIP_MIN_DIST:
@@ -53,15 +72,21 @@ class GripBotListener(Leap.Listener):
         elif distance > GRIP_MAX_DIST:
             angle = GRIP_ANGLE_MAX
         else:
-            angle = GRIP_ANGLE_MAX * (float(distance) - GRIP_MIN_DIST) / GRIP_MAX_DIST
+            angle = GRIP_ANGLE_MAX * (float(distance) - GRIP_MIN_DIST) / \
+                    (GRIP_MAX_DIST - GRIP_MIN_DIST)
 
-        print x, y, angle
+        samples[index] = (x, y, z, angle)
 
 
 def main():
     listener = GripBotListener()
     controller = Leap.Controller()
     controller.add_listener(listener)
+
+    control.setup()
+
+    thread = threading.Thread(target=sample)
+    thread.start()
 
     print "Press Enter to quit..."
     try:
@@ -71,6 +96,7 @@ def main():
     finally:
         controller.remove_listener(listener)
 
+    done = True
 
 if __name__ == "__main__":
     main()
