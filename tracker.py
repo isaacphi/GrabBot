@@ -11,13 +11,13 @@ import control
 
 GRIP_MIN_DIST = 40
 GRIP_MAX_DIST = 90
-GRIP_ANGLE_MAX = 30
+GRIP_ANGLE_MAX = 60
 DELAY = 0.05
 
 done = False
 index = 0
-samples = [(0, 0, 0, 0) * 10]
-previous = (0, 0, 0)
+samples = [(0, 0, 500, 0) * 10]
+previous = (0, 0, 500)
 
 
 def sample():
