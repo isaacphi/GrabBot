@@ -95,16 +95,16 @@ def move(p1, p2, phi, del_t):
 
     # Convert these values into numbers 0-180
 
-    NE_speed = -(V_SW * (90 / MAX_SPEED)) + 90
+    NE_speed = (V_NE * (90 / MAX_SPEED)) + 90
     NE_speed = max(min(NE_speed, 180), 0)
 
-    NW_speed = (V_SW * (90 / MAX_SPEED)) + 90
+    NW_speed = -(V_NW * (90 / MAX_SPEED)) + 90
     NW_speed = max(min(NW_speed, 180), 0)
 
-    SE_speed = (V_SE * (90 / MAX_SPEED)) + 90
+    SE_speed = -(V_SE * (90 / MAX_SPEED)) + 90
     SE_speed = max(min(SE_speed, 180), 0)
 
-    SW_speed = -(V_SW * (90 / MAX_SPEED)) + 90
+    SW_speed = (V_SW * (90 / MAX_SPEED)) + 90
     SW_speed = max(min(SW_speed, 180), 0)
 
     
