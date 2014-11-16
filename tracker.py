@@ -12,7 +12,7 @@ import control
 GRIP_MIN_DIST = 40
 GRIP_MAX_DIST = 90
 GRIP_ANGLE_MAX = 60
-DELAY = 0.05
+DELAY = 0.1
 
 done = False
 index = 0
@@ -28,7 +28,7 @@ def sample():
         #print average
         new = average[:3]
         control.move(previous, new, average[3], DELAY)
-        previous = average[:3]
+        previous = new
         time.sleep(DELAY)
 
 

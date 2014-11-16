@@ -29,7 +29,7 @@ void setup()
 
 void loop()
 {
-  while (Serial.available() > 0) {
+  if (Serial.available() >= 20) {
     // look for the next valid integer in the incoming serial stream,
     // separated by commas
     NE_speed = Serial.parseInt();
@@ -37,12 +37,12 @@ void loop()
     SE_speed = Serial.parseInt();
     SW_speed = Serial.parseInt(); 
     grab_pos = Serial.parseInt();
-    if (Serial.read() == '\n')
-      { break; }
+    while (Serial.read() != '\n');
+    
+    NE_servo.write(NE_speed);
+    NW_servo.write(NW_speed);
+    SE_servo.write(SE_speed);
+    SW_servo.write(SW_speed);
+    grab_servo.write(grab_pos);
   }
-  NE_servo.write(NE_speed);
-  NW_servo.write(NW_speed);
-  SE_servo.write(SE_speed);
-  SW_servo.write(SW_speed);
-  grab_servo.write(grab_pos);
 }

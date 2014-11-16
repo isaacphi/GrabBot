@@ -49,7 +49,9 @@ def setup():
 
 
 def move(p1, p2, phi, del_t):
+    # transform angle
     theta = 90 - min(max(phi, 0), 90)
+
     x1, y1, z1 = p1 # last points
     x2, y2, z2 = p2 # new points
 
@@ -69,6 +71,8 @@ def move(p1, p2, phi, del_t):
     z1 = H - H * (z1 - MIN_Z) / (MAX_Z-MIN_Z)
     z2 = H - H * (z2 - MIN_Z) / (MAX_Z-MIN_Z)
 
+    print x2-x1, y2-y1, z2-z1
+
     # Calculate last string lengths
     l_SW1 = math.sqrt( x1**2 + y1**2 + z1**2 )
     l_SE1 = math.sqrt( (L-x1)**2 + y1**2 + z1**2 )
@@ -87,6 +91,8 @@ def move(p1, p2, phi, del_t):
     del_NW = l_NW2 - l_NW1
     del_NE = l_NE2 - l_NE1
 
+    print del_NE, del_NW, del_SE, del_SW
+
     # And Calculate motor velocites
     V_SW = del_SW / del_t
     V_SE = del_SE / del_t
@@ -97,20 +103,26 @@ def move(p1, p2, phi, del_t):
 
     NE_speed = (V_NE * (90 / MAX_SPEED)) + 90
     NE_speed = max(min(NE_speed, 180), 0)
+    if (NE_speed > 80 and NE_speed < 100):
+        NE_speed = 90
 
     NW_speed = -(V_NW * (90 / MAX_SPEED)) + 90
     NW_speed = max(min(NW_speed, 180), 0)
+    if (NW_speed > 80 and NW_speed < 100):
+        NW_speed = 90
 
     SE_speed = -(V_SE * (90 / MAX_SPEED)) + 90
     SE_speed = max(min(SE_speed, 180), 0)
+    if (SE_speed > 80 and SE_speed < 100):
+        SE_speed = 90
 
     SW_speed = (V_SW * (90 / MAX_SPEED)) + 90
     SW_speed = max(min(SW_speed, 180), 0)
-
-    
+    if (SW_speed > 80 and SW_speed < 100):
+        SW_speed = 90
 
     # Update the motor speeds & Angle
-    cmd = ",".join([str(int(x)) for x in [NE_speed, NW_speed, SE_speed, SW_speed, theta]]) + '\n'
+    cmd = ",".join(["{:03d}".format(int(x)) for x in [NE_speed, NW_speed, SE_speed, SW_speed, theta]]) + '\n'
     print cmd
     ser.write(cmd)
 
