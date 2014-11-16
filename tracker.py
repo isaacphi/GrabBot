@@ -65,9 +65,9 @@ class GripBotListener(Leap.Listener):
         thumb = hand.fingers[0].tip_position
         finger = hand.fingers[1].tip_position
 
-        x = int(finger[0])
-        y = -int(finger[2])
-        z = int(finger[1])
+        x = int(thumb[0])
+        y = -int(thumb[2])
+        z = int(thumb[1])
         distance = dist(finger, thumb)
 
         if distance < GRIP_MIN_DIST:
