@@ -12,6 +12,7 @@ H = 320
 R = 20
 MAX_RPM = 50
 MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
+SPEED_FACTOR = 1.0
 
 MIN_X = -200
 MAX_X = 200
@@ -94,10 +95,10 @@ def move(p1, p2, phi, del_t):
     print del_NE, del_NW, del_SE, del_SW
 
     # And Calculate motor velocites
-    V_SW = del_SW / del_t
-    V_SE = del_SE / del_t
-    V_NW = del_NW / del_t
-    V_NE = del_NE / del_t
+    V_SW = SPEED_FACTOR * del_SW / del_t
+    V_SE = SPEED_FACTOR * del_SE / del_t
+    V_NW = SPEED_FACTOR * del_NW / del_t
+    V_NE = SPEED_FACTOR * del_NE / del_t
 
     # Convert these values into numbers 0-180
 
