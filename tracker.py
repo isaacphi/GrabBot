@@ -21,6 +21,8 @@ previous = (0, 0, 0)
 
 
 def sample():
+    global previous
+
     while not done:
         average = [sum([x[i] for x in samples]) for i in range(4)]
         print average
