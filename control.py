@@ -12,12 +12,13 @@ H = 320
 R = 20
 MAX_RPM = 50
 MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
-MIN_X = -500
-MAX_X = 500
-MIN_Y = -500
-MAX_Y = 500
+
+MIN_X = -200
+MAX_X = 200
+MIN_Y = -200
+MAX_Y = 200
 MIN_Z = 50
-MAX_Z = 500
+MAX_Z = 250
 
 x, y, z, theta = 0, 0, 0, 0
 ser = None
