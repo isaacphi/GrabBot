@@ -25,8 +25,9 @@ def sample():
 
     while not done:
         average = [sum([x[i] for x in samples]) for i in range(4)]
-        print average
-        control.move(previous, average[:3], average[3], DELAY)
+        #print average
+        new = average[:3]
+        control.move(previous, new, average[3], DELAY)
         previous = average[:3]
         time.sleep(DELAY)
 
