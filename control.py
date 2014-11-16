@@ -95,7 +95,10 @@ def move(p1, p2, phi, del_t):
     if NE_speed < 0: NE_speed = 0
     # TODO make angle right
     # Update the motor speeds & Angle
-    ser.write(",".join([str(x) for x in [NE_speed, NW_speed, SE_speed, SW_speed, theta]]) + '\n')
+
+    cmd = ",".join([str(x) for x in [NE_speed, NW_speed, SE_speed, SW_speed, theta]]) + '\n'
+    print cmd
+    ser.write(cmd)
 
 
 if __name__ == '__main__':
