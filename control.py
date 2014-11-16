@@ -59,8 +59,8 @@ def move(p1, p2, phi, del_t):
     x2 = L * (x2 + MIN_X) / (MAX_X-MIN_X)
     y1 = W * (y1 + MIN_Y) / (MAX_Y-MIN_Y)
     y2 = W * (y2 + MIN_Y) / (MAX_Y-MIN_Y)
-    z1 = -H * (z1 + MIN_Z) / (MAX_X-MIN_Z)
-    z2 = -H * (z2 + MIN_Z) / (MAX_X-MIN_Z)
+    z1 = -H * (z1 + MIN_Z) / (MAX_Z-MIN_Z)
+    z2 = -H * (z2 + MIN_Z) / (MAX_Z-MIN_Z)
 
     # Calculate last string lengths
     l_SW1 = math.sqrt( x1**2 + y1**2 + z1**2 )
@@ -88,8 +88,8 @@ def move(p1, p2, phi, del_t):
 
     # Convert these values into numbers 0-180
 
-    NE_speed = (V_SW * (90 / MAX_SPEED)) + 90
-    NE_speed = 180 - max(min(NE_speed, 180), 0)
+    NE_speed = -(V_SW * (90 / MAX_SPEED)) + 90
+    NE_speed = max(min(NE_speed, 180), 0)
 
     NW_speed = (V_SW * (90 / MAX_SPEED)) + 90
     NW_speed = max(min(NW_speed, 180), 0)
@@ -97,8 +97,8 @@ def move(p1, p2, phi, del_t):
     SE_speed = (V_SE * (90 / MAX_SPEED)) + 90
     SE_speed = max(min(SE_speed, 180), 0)
 
-    SW_speed = (V_SW * (90 / MAX_SPEED)) + 90
-    SW_speed = 180 - max(min(SW_speed, 180), 0)
+    SW_speed = -(V_SW * (90 / MAX_SPEED)) + 90
+    SW_speed = max(min(SW_speed, 180), 0)
 
     
 
