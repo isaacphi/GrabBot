@@ -15,15 +15,16 @@ MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
 MIN_X = -500
 MAX_X = 500
 MIN_Y = -500
-MAY_Y = 500
+MAX_Y = 500
 MIN_Z = 50
 MAX_Z = 500
 
 x, y, z, theta = 0, 0, 0, 0
-
+ser = None
 
 def main():
-    setup()
+    global ser
+    ser = setup()
     while True:
         speeds = input('speeds: ')
         ser.write(str(speeds))
@@ -31,6 +32,7 @@ def main():
 
 def setup():
     """ Connect to arduino """
+    global ser
 
     for path in ("/dev/ttyACM0", "/dev/ttyACM1", "/dev/tty.usbmodem1411", "/dev/cu.usbmodem1411"):
         try:
@@ -85,15 +87,15 @@ def move(p1, p2, phi, del_t):
     SE_speed = (V_SE * (90 / MAX_SPEED)) + 90
     if SE_speed > 180: SE_speed = 180
     if SE_speed < 0: SE_speed = 0
-    SW_speed = (V_SW * (90 / MAX_SPEED)) + 90
+    NW_speed = (V_SW * (90 / MAX_SPEED)) + 90
     if NW_speed > 180: NW_speed = 180
     if NW_speed < 0: NW_speed = 0
-    SW_speed = (V_SW * (90 / MAX_SPEED)) + 90
+    NE_speed = (V_SW * (90 / MAX_SPEED)) + 90
     if NE_speed > 180: NE_speed = 180
     if NE_speed < 0: NE_speed = 0
     # TODO make angle right
     # Update the motor speeds & Angle
-    ser.write(NE_speed + NW_speed + SE_speed + SW_speed + theta + '\n')
+    ser.write(",".join([str(x) for x in [NE_speed, NW_speed, SE_speed, SW_speed, theta]]) + '\n')
 
 
 if __name__ == '__main__':
