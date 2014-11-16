@@ -16,8 +16,8 @@ DELAY = 0.05
 
 done = False
 index = 0
-samples = [(0, 0, 500, 0) * 10]
-previous = (0, 0, 500)
+samples = [(0, 0, 100, 0) * 10]
+previous = (0, 0, 100)
 
 
 def sample():
