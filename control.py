@@ -20,6 +20,7 @@ MIN_Y = -200
 MAX_Y = 200
 MIN_Z = 50
 MAX_Z = 250
+OFFSET = 40
 
 x, y, z, theta = 0, 0, 0, 0
 ser = None
@@ -75,16 +76,16 @@ def move(p1, p2, phi, del_t):
     print x2-x1, y2-y1, z2-z1
 
     # Calculate last string lengths
-    l_SW1 = math.sqrt( x1**2 + y1**2 + z1**2 )
-    l_SE1 = math.sqrt( (L-x1)**2 + y1**2 + z1**2 )
-    l_NW1 = math.sqrt( x1**2 + (W-y1)**2 + z1**2 )
-    l_NE1 = math.sqrt( (L-x1)**2 + (W-y1)**2 + z1**2 )
+    l_SW1 = math.sqrt( (x1-OFFSET)**2 + (y1-OFFSET)**2 + z1**2 )
+    l_SE1 = math.sqrt( (L-x1-OFFSET)**2 + (y1-OFFSET)**2 + z1**2 )
+    l_NW1 = math.sqrt( (x1-OFFSET)**2 + (W-y1-OFFSET)**2 + z1**2 )
+    l_NE1 = math.sqrt( (L-x1-OFFSET)**2 + (W-y1-OFFSET)**2 + z1**2 )
 
     # Calculate new string lengths
-    l_SW2 = math.sqrt( x2**2 + y2**2 + z2**2 )
-    l_SE2 = math.sqrt( (L-x2)**2 + y2**2 + z2**2 )
-    l_NW2 = math.sqrt( x2**2 + (W-y2)**2 + z2**2 )
-    l_NE2 = math.sqrt( (L-x2)**2 + (W-y2)**2 + z2**2 )
+    l_SW2 = math.sqrt( (x2-OFFSET)**2 + (y2-OFFSET)**2 + z2**2 )
+    l_SE2 = math.sqrt( (L-x2-OFFSET)**2 + (y2-OFFSET)**2 + z2**2 )
+    l_NW2 = math.sqrt( (x2-OFFSET)**2 + (W-y2-OFFSET)**2 + z2**2 )
+    l_NE2 = math.sqrt( (L-x2-OFFSET)**2 + (W-y2-OFFSET)**2 + z2**2 )
 
     # Calculate differences
     del_SW = l_SW2 - l_SW1
