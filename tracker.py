@@ -12,7 +12,7 @@ import control
 GRIP_MIN_DIST = 40
 GRIP_MAX_DIST = 90
 GRIP_ANGLE_MAX = 60
-DELAY = 0.1
+DELAY = 0.05
 
 done = False
 index = 0
