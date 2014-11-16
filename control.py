@@ -6,10 +6,10 @@ import math
 PORT = 9600
 
 # Physical dimensions in mm
-L = 500
-W = 400
-H = 320
-R = 20
+L = 390
+W = 330
+H = 340
+R = 23
 MAX_RPM = 50
 MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
 SPEED_FACTOR = 1.0
