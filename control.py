@@ -49,19 +49,25 @@ def setup():
 
 
 def move(p1, p2, phi, del_t):
-    theta = 90 - phi
-    if theta > 90: theta = 90
-    if theta < 0: theta = 0
+    theta = 90 - min(max(phi, 0), 90)
     x1, y1, z1 = p1 # last points
     x2, y2, z2 = p2 # new points
 
-    # Convert from Neil's coordinate system to the physical one
-    x1 = L * (x1 + MIN_X) / (MAX_X-MIN_X)
-    x2 = L * (x2 + MIN_X) / (MAX_X-MIN_X)
-    y1 = W * (y1 + MIN_Y) / (MAX_Y-MIN_Y)
-    y2 = W * (y2 + MIN_Y) / (MAX_Y-MIN_Y)
-    z1 = -H * (z1 + MIN_Z) / (MAX_Z-MIN_Z)
-    z2 = -H * (z2 + MIN_Z) / (MAX_Z-MIN_Z)
+    # clamp inputs
+    x1 = min(max(x1, MIN_X), MAX_X)
+    x2 = min(max(x2, MIN_X), MAX_X)
+    y1 = min(max(y1, MIN_Y), MAX_Y)
+    y2 = min(max(y2, MIN_Y), MAX_Y)
+    z1 = min(max(z1, MIN_Z), MAX_Z)
+    z2 = min(max(z2, MIN_Z), MAX_Z)
+
+    # Convert from leap motion's coordinate system to the physical one
+    x1 = L * (x1 - MIN_X) / (MAX_X-MIN_X)
+    x2 = L * (x2 - MIN_X) / (MAX_X-MIN_X)
+    y1 = W * (y1 - MIN_Y) / (MAX_Y-MIN_Y)
+    y2 = W * (y2 - MIN_Y) / (MAX_Y-MIN_Y)
+    z1 = H - H * (z1 - MIN_Z) / (MAX_Z-MIN_Z)
+    z2 = H - H * (z2 - MIN_Z) / (MAX_Z-MIN_Z)
 
     # Calculate last string lengths
     l_SW1 = math.sqrt( x1**2 + y1**2 + z1**2 )
