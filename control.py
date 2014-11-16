@@ -20,8 +20,8 @@ MIN_Y = -200
 MAX_Y = 200
 MIN_Z = 50
 MAX_Z = 250
-XOFFSET = 50
-YOFFSET = 63
+XOFFSET = 63
+YOFFSET = 50
 
 x, y, z, theta = 0, 0, 0, 0
 ser = None
