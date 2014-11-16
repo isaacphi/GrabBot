@@ -12,7 +12,7 @@ H = 340
 R = 23
 MAX_RPM = 50
 MAX_SPEED = MAX_RPM * 2 * math.pi * R / 60
-SPEED_FACTOR = 1.0
+SPEED_FACTOR = 0.8
 
 MIN_X = -200
 MAX_X = 200
